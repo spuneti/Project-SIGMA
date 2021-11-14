@@ -21,7 +21,6 @@ def access_asterank(inclination_max, eccentricity_max, semi_major_max, profit_mi
     content = data._content.decode("utf-8")
 
     content = ast.literal_eval(content)
-
     return content
 
 
@@ -44,6 +43,20 @@ def filter_dictionaries(list_of_dictionaries):
     return temp_list
 
 
+def get_filtered_dictionaries(inclination_max, eccentricity_max, semi_major_max, profit_min=0, num_objects=1):
+    """
+    Returns a list of filtered dictionaries for each asteroid object
+    :param inclination_max: degrees
+    :param eccentricity_max:
+    :param semi_major_max: AU
+    :param profit_min: dollars
+    :param num_objects: integer
+    :return: list of filtered dictionaries
+    """
+    return filter_dictionaries(access_asterank(inclination_max, eccentricity_max, semi_major_max, profit_min, num_objects))
+
+
+
 def write_content_dict_to_csv(file_location, content_dictionary):
     """
     All this does is write the content dictionary to a csv
@@ -57,8 +70,10 @@ def write_content_dict_to_csv(file_location, content_dictionary):
     dict_writer.writerows(content_dictionary)
     a_file.close()
 
-
+'''
 if __name__ == '__main__':
     content_dict = filter_dictionaries(access_asterank(10, .3, 2, 100000000, 100))
+    print(content_dict)
     write_content_dict_to_csv('testing_csv.csv', content_dict)
     print('no errors')
+'''

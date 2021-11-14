@@ -1,5 +1,6 @@
 import pandas as pd
 from modules.asteroid import Asteroid
+from modules.asterankapi import get_filtered_dictionaries
 
 class SimulationManager:
     '''
@@ -20,6 +21,18 @@ class SimulationManager:
         asteriod_df = pd.read_csv(csv_file_path)
         for row in asteriod_df.itertuples(index=False):
             self.asteroids[row._0] = Asteroid(row._5, row.Eccentricity, row._4)
+
+    def get_asteroids_from_api(self, list_of_constraints):
+        '''
+        function will create asteroid objects inside the sim manager from the constraints given
+        and then directly from the api
+        '''
+        print(list_of_constraints[1])
+        list_of_asteroids = get_filtered_dictionaries(list_of_constraints[0], list_of_constraints[1], 
+                                                      list_of_constraints[2], list_of_constraints[3], 
+                                                      list_of_constraints[4])
+        for asteroid_dict in list_of_asteroids:
+            self.asteroids[asteroid_dict['Object Name']] = Asteroid(asteroid_dict['Semi-major Axis (AU)'], asteroid_dict['Eccentricity'], asteroid_dict['Inclination (degrees)'])
 
     def add_spaceship_for_asteroid(self, spaceship_object, asteroid_name):
         '''

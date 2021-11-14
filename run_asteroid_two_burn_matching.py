@@ -15,6 +15,14 @@ def populate_asteroid_objects(simulation_manager, asteroid_csv_path):
     '''
     simulation_manager.get_asteroids_from_csv(asteroid_csv_path)
 
+def populate_asteroid_objects_from_api(simulation_manager, list_of_constraints):
+    '''
+    this function will take in a simulation manager
+    and call the simulation managers function
+    to read asteroids in from a csv
+    '''
+    simulation_manager.get_asteroids_from_api(list_of_constraints)
+
 def create_spaceship_for_each_asteroid_at_earth(simulation_manager):
     '''
     this function will create a spaceship for each asteroid
@@ -29,6 +37,13 @@ def populate_spaceships_and_asteroids(simulation_manager, asteroid_csv_path):
     will populate the sim manager with relevant asteroids and spaceships
     '''
     populate_asteroid_objects(simulation_manager, asteroid_csv_path)
+    create_spaceship_for_each_asteroid_at_earth(simulation_manager)
+
+def populate_spaceships_and_asteroids_from_api(simulation_manager, list_of_constraints):
+    '''
+    will populate the sim manager with relevant asteroids and spaceships
+    '''
+    populate_asteroid_objects_from_api(simulation_manager, list_of_constraints)
     create_spaceship_for_each_asteroid_at_earth(simulation_manager)
 
 def do_all_missions_apo_peri(simulation_manager):
@@ -97,13 +112,22 @@ if __name__ == '__main__':
     '''
 
     ############### INPUTS ################
-    asteroid_file_path = 'inputs/wider_limits_asteroids.csv'
+    #asteroid_file_path = 'inputs/wider_limits_asteroids.csv'
+    inclination_max = 10 # degrees
+    eccentricity_max = .3 # eccentricity of orbit
+    semi_major_max = 2 # astronimcal units of earth
+    profit_min = 100000000 # dollars
+    max_num_asteroids=100
+
+    ############ END INPUTS ###############
+    # Putting constraints into a list
+    constraint_list = [inclination_max, eccentricity_max, semi_major_max, profit_min, max_num_asteroids]
 
     # Creating sim manager
     simulation_manager = SimulationManager()
 
     # Adding Spaceships and Asteroids
-    populate_spaceships_and_asteroids(simulation_manager, asteroid_file_path)
+    populate_spaceships_and_asteroids_from_api(simulation_manager, constraint_list)
 
     # Reseting all spaceships
     simulation_manager.reset_all_spaceships()
