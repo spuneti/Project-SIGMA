@@ -15,3 +15,12 @@ MU_SUN = 1.32712440018 * 10 ** 20
 
 # gravitational parameter of the sun
 MU_EARTH = 3.986004418 * 10 ** 14
+
+# earth mass
+MASS_EARTH = 5.9736 * 10 ** 24
+
+# sun mass
+MASS_SUN = 1.988 * 10 ** 30
+
+# earth radius METERS
+RADIUS_EARTH_METERS = 6371000

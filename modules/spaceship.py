@@ -18,9 +18,10 @@ class Spaceship(SpaceObject):
         
         SpaceObject.__init__(self, semimajor_axis_au, eccentricity, inclination)  # Call parent class constructor.
         self.mu = grav_param
-        self.orbital_energy = self.set_current_orbital_energy
+        self.set_current_orbital_energy()
         self.list_of_dv_maneuvers = np.array([]) # this list will contain all deltaV needs of maneuvers done (m/s)
         self.list_of_TOF_seconds = np.array([]) # this list will be filled with all TOFs of maneuvers (seconds)
+        self.list_of_burn_descriptions = []
 
     
     def add_dv_requirement(self, dv_req):
